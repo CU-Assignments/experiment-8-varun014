@@ -1,0 +1,32 @@
+// EmployeeServlet.java
+@WebServlet("/employees")
+public class EmployeeServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+        
+        EmployeeDAO dao = new EmployeeDAO();
+        String id = request.getParameter("id");
+        
+        if(id != null && !id.isEmpty()) {
+            Employee emp = dao.getEmployeeById(Integer.parseInt(id));
+            request.setAttribute("employees", Collections.singletonList(emp));
+        } else {
+            request.setAttribute("employees", dao.getAllEmployees());
+        }
+        
+        request.getRequestDispatcher("employees.jsp").forward(request, response);
+    }
+}
+
+// EmployeeDAO.java
+public class EmployeeDAO {
+    public List<Employee> getAllEmployees() {
+        List<Employee> list = new ArrayList<>();
+        // JDBC code to fetch all employees
+        return list;
+    }
+    
+    public Employee getEmployeeById(int id) {
+        // JDBC code to fetch single employee
+    }
+}
